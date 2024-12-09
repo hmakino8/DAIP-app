@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ログインページ</title>
+    <!-- Tailwind CSS CDN (for quick demo purposes) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-96">
+      <form>
+        <div class="mb-4">
+          <label for="role" class="block text-sm font-medium text-gray-600"
+            >ユーザー/管理者</label
+          >
+          <select
+            id="role"
+            name="role"
+            class="block text-sm font-medium text-gray-600 border rounded-md py-3 w-full"
+          >
+            <option value="ユーザー">ユーザー</option>
+            <option value="管理者">管理者</option>
+          </select>
+          <label for="username" class="block text-sm font-medium text-gray-600"
+            >ID</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="mt-1 p-2 w-full border rounded-md"
+          />
+          <label for="username" class="block text-sm font-medium text-gray-600"
+            >pass</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="mt-1 p-2 w-full border rounded-md"
+          />
+        </div>
+
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            formaction="./menu_user.html"
+            class="bg-blue-500 text-white p-2 rounded-md w-20"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
