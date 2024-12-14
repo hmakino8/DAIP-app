@@ -2,11 +2,11 @@
 
 {% block title %}done{% endblock %}
 
-{% block main_padding %}pt-24 pb-12{% endblock %}
+{% block main_padding %}pt-24{% endblock %}
 
 {% block content %}
 {% include 'header.html' %}
-<div class="flex flex-col items-center mx-auto w-full">
+<div class="flex flex-col items-center mx-auto w-full max-w-xl">
 
   <div class="flex flex-col items-center">
     <div class="flex justify-center items-center mb-10">
@@ -15,7 +15,7 @@
 
     <p class="text-xl mb-5">またのご予約をお待ちしております。</p>
   </div>
-  <div class="flex flex-col justify-center items-center bg-gray-300 w-10/12 h-[150px] border my-12">
+  <div class="flex flex-col justify-center items-center bg-gray-200 w-10/12 h-[150px] border my-12">
     <p class="text-2xl mb-5">予約番号：〜〜〜〜〜〜〜〜〜〜</p>
     <p class="text-2xl">〜月〜日 〜：〜</p>
   </div>

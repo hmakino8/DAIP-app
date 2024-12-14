@@ -2,11 +2,11 @@
 
 {% block title %}予約{% endblock %}
 
-{% block main_padding %}pt-24 pb-12{% endblock %}
+{% block main_padding %}pt-24{% endblock %}
 
 {% block content %}
 {% include 'header.html' %}
-<div class="flex flex-col items-center mx-auto w-full">
+<div class="flex flex-col items-center mx-auto w-full max-w-xl">
 
     <div class="flex flex-col items-center mb-10 w-full">
       <a
@@ -17,7 +17,7 @@
       座席予約
       </a>
 
-      <div class="w-full max-w-md border">
+      <div class="w-full border bg-gray-100 rounded-md">
         <div class="flex w-full border-b">
           <div class="w-1/3">予約日時：</div>
           <div class="w-2/3 text-center">2024/12/13 13:00 ~ 14:00</div>
@@ -30,7 +30,7 @@
       </div>
     </div>
       
-    <div class="flex flex-col items-center h-auto mb-10 w-full">
+    <div class="flex flex-col items-center h-auto w-full">
       <a
         type="submit"
         class="bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
@@ -40,7 +40,7 @@
       </a>
       <p>※事前オーダーで商品価格10%off！</p>
 
-      <div class="w-full max-w-md border">
+      <div class="w-full border bg-gray-100 rounded-md">
         <div class="flex w-full border-b">
           <div class="w-2/4">コーヒー</div>
           <div class="w-1/4 text-center">1個</div>
@@ -68,9 +68,9 @@
           </div>
         </div>
       </div>
+    {% with back_url="/home" next_text="確認" next_url="./confirm" %}
+      {% include './footer_navigation.html' %}
+    {% endwith %}
     </div>
-  {% with back_url="/home" next_text="確認" next_url="./confirm" %}
-    {% include './footer_navigation.html' %}
-  {% endwith %}
 </div>
 {% endblock%}

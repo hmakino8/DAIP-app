@@ -3,302 +3,301 @@
 
 {% block title %}reservation_confirm{% endblock %}
 
-{% block main_padding %}pt-24 pb-12{% endblock %}
+{% block main_padding %}pt-24{% endblock %}
 
 {% block content %}
 {% include 'header.html' %}
 
-<div class="bg-white rounded shadow-md w-full text-sm md:text-base">
+<div class="mx-auto w-full max-w-3xl">
+  <div class="rounded shadow-md text-[10px] md:text-base px-5 pb-5">
 
-  <select
-    id="role"
-    name="role"
-    class="block text-sm font-medium text-gray-600 border rounded-md py-3 mx-auto mb-12"
-  >
-    <option value="全席">全席</option>
-    <option value="座席1">座席1</option>
-    <option value="座席2">座席2</option>
-    <option value="座席3">座席3</option>
-    <option value="座席4">座席4</option>
-    <option value="座席5">座席5</option>
-    <option value="座席6">座席6</option>
-    <option value="座席7">座席7</option>
-    <option value="座席8">座席8</option>
-  </select>
+    <select
+      id="role"
+      name="role"
+      class="shadow-md block text-sm font-medium text-gray-600 text-center border rounded-md py-3 mx-auto"
+    >
+      <option value="全席">全席</option>
+      <option value="座席1">座席1</option>
+      <option value="座席2">座席2</option>
+      <option value="座席3">座席3</option>
+      <option value="座席4">座席4</option>
+      <option value="座席5">座席5</option>
+      <option value="座席6">座席6</option>
+      <option value="座席7">座席7</option>
+      <option value="座席8">座席8</option>
+    </select>
     <div class="flex justify-between mb-2">
         <a href="#" class="text-blue-500 hover:underline">前の週</a>
         <a href="#" class="text-blue-500 hover:underline">次の週</a>
     </div>
     <div class="grid grid-cols-8 gap-1">
-            <!-- Headers -->
-        <div class="text-center font-semibold h-8"></div>
-        <div class="text-center font-semibold h-8">1/21</div>
-        <div class="text-center font-semibold h-8">1/22</div>
-        <div class="text-center font-semibold h-8">1/23</div>
-        <div class="text-center font-semibold h-8">1/24</div>
-        <div class="text-center font-semibold h-8">1/25</div>
-        <div class="text-center font-semibold h-8">1/26</div>
-        <div class="text-center font-semibold h-8">1/27</div>
+              <!-- Headers -->
+      <div class="text-center font-semibold h-8"></div>
+      <div class="text-center font-semibold h-8">1/21</div>
+      <div class="text-center font-semibold h-8">1/22</div>
+      <div class="text-center font-semibold h-8">1/23</div>
+      <div class="text-center font-semibold h-8">1/24</div>
+      <div class="text-center font-semibold h-8">1/25</div>
+      <div class="text-center font-semibold h-8">1/26</div>
+      <div class="text-center font-semibold h-8">1/27</div>
 
-        <div class="text-center font-semibold h-8"></div>
-        <div class="text-center font-semibold h-8">Mon</div>
-        <div class="text-center font-semibold h-8">Tue</div>
-        <div class="text-center font-semibold h-8">Wed</div>
-        <div class="text-center font-semibold h-8">Thu</div>
-        <div class="text-center font-semibold h-8">Fri</div>
-        <div class="text-center font-semibold h-8">Sat</div>
-        <div class="text-center font-semibold h-8">Sun</div>
+      <div class="text-center font-semibold h-8"></div>
+      <div class="text-center font-semibold h-8">Mon</div>
+      <div class="text-center font-semibold h-8">Tue</div>
+      <div class="text-center font-semibold h-8">Wed</div>
+      <div class="text-center font-semibold h-8">Thu</div>
+      <div class="text-center font-semibold h-8">Fri</div>
+      <div class="text-center font-semibold h-8">Sat</div>
+      <div class="text-center font-semibold h-8">Sun</div>
 
-        <div class="text-center font-semibold h-8">10:00</div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <div class="border p-0 text-center h-8">
-            <span class="block mt-1 text-red-500">空席なし</span>
-        </div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
+      <div class="text-center font-semibold h-8">10:00</div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <div class="border p-0 text-center h-8">
+          <span class="block mt-1 text-red-500">空席なし</span>
+      </div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
 
-        <div class="text-center font-semibold h-8">11:00</div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <div class="border p-0 text-center h-8">
-            <span class="block mt-1 text-red-500">空席なし</span>
-        </div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
+      <div class="text-center font-semibold h-8">11:00</div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <div class="border p-0 text-center h-8">
+          <span class="block mt-1 text-red-500">空席なし</span>
+      </div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
 
-        <div class="text-center font-semibold h-8">12:00</div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <div class="border p-0 text-center h-8">
-            <span class="block mt-1 text-red-500">空席なし</span>
-        </div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
+      <div class="text-center font-semibold h-8">12:00</div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <div class="border p-0 text-center h-8">
+          <span class="block mt-1 text-red-500">空席なし</span>
+      </div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
 
-        <div class="text-center font-semibold h-8">13:00</div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <div class="border p-0 text-center h-8">
-            <span class="block mt-1 text-red-500">空席なし</span>
-        </div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
+      <div class="text-center font-semibold h-8">13:00</div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <div class="border p-0 text-center h-8">
+          <span class="block mt-1 text-red-500">空席なし</span>
+      </div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
 
-        <div class="text-center font-semibold h-8">14:00</div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <div class="border p-0 text-center h-8">
-            <span class="block mt-1 text-red-500">空席なし</span>
-        </div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
+      <div class="text-center font-semibold h-8">14:00</div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <div class="border p-0 text-center h-8">
+          <span class="block mt-1 text-red-500">空席なし</span>
+      </div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
 
-        <div class="text-center font-semibold h-8">15:00</div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <div class="border p-0 text-center h-8">
-            <span class="block mt-1 text-red-500">空席なし</span>
-        </div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
+      <div class="text-center font-semibold h-8">15:00</div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <div class="border p-0 text-center h-8">
+          <span class="block mt-1 text-red-500">空席なし</span>
+      </div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
 
-        <div class="text-center font-semibold h-8">16:00</div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <div class="border p-0 text-center h-8">
-            <span class="block mt-1 text-red-500">空席なし</span>
-        </div>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
-        <a href="./reserve.html">
-            <div class="border p-0 text-center bg-gray-100 h-8">
-                <span class="block mt-1 text-green-500">残り2席</span>
-            </div>
-        </a>
+      <div class="text-center font-semibold h-8">16:00</div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <div class="border p-0 text-center h-8">
+          <span class="block mt-1 text-red-500">空席なし</span>
+      </div>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
+      <a href="./reserve.html">
+          <div class="border p-0 text-center bg-gray-100 h-8">
+              <span class="block mt-1 text-green-500">残り2席</span>
+          </div>
+      </a>
     </div>
-    <div class="flex justify-between mb-2">
-        <a href="/reservation" class="text-blue-500 hover:underline">戻る</a>
-    </div>
+  </div>
+  {% with back_url="/reservation" next_text="座席確保" next_url="/reservation/" next_color="bg-green-500" %}
+    {% include './footer_navigation.html' %}
+  {% endwith %}
 </div>
-{% with back_url="/reservation" next_text="座席確保" next_url="/reservation/" next_color="green-500" %}
-  {% include './footer_navigation.html' %}
-{% endwith %}
 {% endblock %}
