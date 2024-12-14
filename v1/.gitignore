@@ -13,6 +13,9 @@ dist
 media
 staticfiles
 
+#node.js
+node_modules/
+
 # env
 *.env
 

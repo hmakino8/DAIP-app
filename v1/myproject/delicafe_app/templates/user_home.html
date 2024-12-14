@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}ホーム{% endblock %}
+
+{% block main_padding %}pt-24 pb-12{% endblock %}
+
+{% block content %}
+{% include 'header.html' %}
+
+<div class="flex flex-col items-center">
+  <a
+    type="submit"
+    class="bg-green-500 text-white text-center p-2 mb-10 rounded-md w-32"
+    href="/reservation"
+  >
+  予約
+  </a>
+  <a
+    type="submit"
+    class="bg-green-500 text-white text-center p-2 mb-10 rounded-md w-32"
+    href="/reservation/history"
+  >
+  予約履歴
+  </a>
+  <div class="p-5 border h-auto w-10/12">
+    <p class="m-5 font-bold text-center">店舗からのお知らせ</p>
+    <div class="overflow-auto h-36 px-4">
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+      <p class="break-words">・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
