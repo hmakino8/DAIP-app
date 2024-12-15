@@ -1,18 +1,18 @@
-{% extends "base.html" %}
+{% extends "base/base.html" %}
 
 {% block title %}予約{% endblock %}
 
 {% block main_padding %}pt-24{% endblock %}
 
 {% block content %}
-{% include 'header.html' %}
+{% include 'base/header.html' %}
 <div class="flex flex-col items-center mx-auto w-full max-w-xl">
 
     <div class="flex flex-col items-center mb-10 w-full">
       <a
         type="submit"
         class="bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
-        href="/reservation/seat"
+        href="{% url 'user:reservation_calendar' %}"
       >
       座席予約
       </a>
@@ -68,9 +68,9 @@
           </div>
         </div>
       </div>
-    {% with back_url="/home" next_text="確認" next_url="./confirm" %}
-      {% include './footer_navigation.html' %}
-    {% endwith %}
+      {% with back_url="user:home" next_text="確認" next_url="user:reservation_confirm" %}
+        {% include 'base/footer.html' %}
+      {% endwith %}
     </div>
 </div>
 {% endblock%}

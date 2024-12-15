@@ -30,8 +30,8 @@ class UserViewSet:
     class Done(TemplateView):
       template_name = "reservation/done.html"
 
-    class Seat(TemplateView):
-      template_name = "reservation/seat.html"
+    class Calendar(TemplateView):
+      template_name = "reservation/calendar.html"
 
     class History(TemplateView):
       template_name = "reservation/history.html"

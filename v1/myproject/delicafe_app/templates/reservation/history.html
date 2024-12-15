@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "base/base.html" %}
 
 {% block title %}予約履歴{% endblock %}
 
 {% block main_padding %}pt-24{% endblock %}
 
 {% block content %}
-{% include 'header.html' %}
+{% include 'base/header.html' %}
 <div class="flex flex-col items-center mx-auto w-full max-w-3xl">
   <table class="w-full">
     <thread>
@@ -48,8 +48,8 @@
     </tbody>
   </table>
 
-  {% with back_url="/home" next_text="確認" next_url="/reservation/cancel" %}
-    {% include './footer_navigation.html' %}
+  {% with back_url="user:home" next_text="確認" next_url="user:reservation_cancel" %}
+    {% include 'base/footer.html' %}
   {% endwith %}
 </div>
 {% endblock%}

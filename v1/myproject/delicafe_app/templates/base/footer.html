@@ -2,7 +2,7 @@
   <div class="flex">
     <div class="flex">
       <a
-        href="{{ back_url }}"
+        href="{% url back_url%}"
         class="bg-gray-500 flex justify-center items-center text-white rounded-md w-20 h-10 mr-3"
       >
       戻る
@@ -10,7 +10,7 @@
     </div>
     <div class="flex">
       <a
-        href="{{ next_url }}"
+        href="{% url next_url %}"
         class="{{ next_color|default:'bg-blue-500' }} flex justify-center items-center text-white rounded-md w-20 h-10"
       >
       {{ next_text|default:'次へ' }}

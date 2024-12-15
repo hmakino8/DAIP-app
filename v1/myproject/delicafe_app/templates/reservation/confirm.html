@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "base/base.html" %}
 
-{% block title %}reservation_confirm{% endblock %}
+{% block title %}予約内容確認{% endblock %}
 
 {% block main_padding %}pt-24{% endblock %}
 
 {% block content %}
-{% include 'header.html' %}
+{% include 'base/header.html' %}
 <div class="flex flex-col items-center mx-auto w-full max-w-xl">
 
   <div class="flex flex-col items-center mb-10 w-full">
@@ -71,8 +71,8 @@
 
     </div>
   </div>
-  {% with back_url="/reservation" next_text="予約確定" next_url="/reservation/done" next_color="bg-green-500" %}
-    {% include './footer_navigation.html' %}
+  {% with back_url="user:reservation_main" next_text="予約確定" next_url="user:reservation_done" next_color="bg-green-500" %}
+    {% include 'base/footer.html' %}
   {% endwith %}
 </div>
 {% endblock%}
