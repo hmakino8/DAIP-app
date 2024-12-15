@@ -1,0 +1,41 @@
+{% extends "base/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}ログイン{% endblock %}
+
+{% block content %}
+  <div class="flex justify-center items-center h-screen">
+    <div class="p-5 rounded shadow-md w-[400px] bg-gray-100">
+      <form method="post">
+        {% csrf_token %}
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="py-2 text-red-500 text-sm text-center">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% for field in form %}
+        <div class="mb-5">
+          {{ field|add_class:"w-full p-2 border rounded-md" }}
+        </div>
+        {% endfor %}
+        
+        <div class="flex justify-between items-center">
+          <button class="text-blue-500">
+            <a href="{% url 'signup' %}">
+              アカウントを作成
+            </a>
+          </button>
+          <button
+            type="submit"
+            class="bg-blue-500 text-white p-2 rounded-md w-20"
+          >
+            ログイン
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -4,16 +4,25 @@ from delicafe_app import views
 from django.conf import settings
 
 urlpatterns = [
+    # admin
     path('admin/', admin.site.urls),
-    path('login/', views.LoginView.as_view(), name="login"),
-    path('home/', views.HomeView.as_view(), name="home"),
-    path('reservation/', views.ReservationView.as_view(), name="reservation"),
-    path('reservation/confirm/', views.ReservationConfirmView.as_view(), name="confirm"),
-    path('reservation/done/', views.ReservationDoneView.as_view(), name="done"),
-    path('reservation/seat/', views.ReservationSeatView.as_view(), name="seat"),
-    path('reservation/history/', views.ReservationHistoryView.as_view(), name="seat"),
-    path('reservation/cancel/', views.ReservationCancelView.as_view(), name="seat"),
-    path('reservation/cancel/done/', views.ReservationCancelDoneView.as_view(), name="seat"),
+    # user
+    path('', include(([
+        path('reservation/', include([
+            path('confirm/', views.ReservationViewSet.User.Confirm.as_view(), name="confirm"),
+            path('done/', views.ReservationViewSet.User.Done.as_view(), name="done"),
+            path('seat/', views.ReservationViewSet.User.Seat.as_view(), name="seat"),
+            path('history/', views.ReservationViewSet.User.History.as_view(), name="history"),
+            path('cancel/', views.ReservationViewSet.User.Cancel.as_view(), name="cancel"),
+            path('cancel/done/', views.ReservationViewSet.User.CancelDone.as_view(), name="cancel_done"),
+        ])),
+
+        path('home/', views.HomeViewSet.User.as_view(), name="home"),
+    ], 'user'), namespace='user')),
+
+    # accounts
+    path('accounts/login/', views.AccountsViewSet.Login.as_view(), name="login"),
+    path('accounts/signup/', views.AccountsViewSet.SignUp.as_view(), name="signup"),
 ]
 
 if settings.DEBUG:
