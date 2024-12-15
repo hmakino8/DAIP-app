@@ -8,8 +8,8 @@ from django.contrib import messages
 
 # LoginRequiredMixin: ログインしていない場合はログイン画面にリダイレクト
 # UserPassesTestMixin: ログインしているユーザーが特定のユーザーであるかをチェック 
-class HomeViewSet:
-  class User(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+class UserViewSet:
+  class Home(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = "user/home.html"
     
     # UserPassesTestMixinで使用されるメソッド
@@ -18,15 +18,8 @@ class HomeViewSet:
     # False -> アクセス不可 403エラー
     def test_func(self):
       return self.request.user.role == 'user'
-
-  class Staff(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = "staff/home.html"
-    
-    def test_func(self):
-      return self.request.user.role == 'staff'
-
-class ReservationViewSet:
-  class User:
+  
+  class Reservation:
     class Main(TemplateView):
       template_name = "reservation/main.html"
 
@@ -48,9 +41,7 @@ class ReservationViewSet:
     class CancelDone(TemplateView):
       template_name = "reservation/cancel_done.html"
 
-  class Staff:
-    pass
-  
+
 # reverse: URLの解決が即座に行われる。主に関数内やメソッド内で使用される。
 # reverse_lazy: URLの解決が遅延される。主にクラス内で使用される。
 # Djangoの起動時にURLconfが完全にロードされる前にクラス属性が評価されることがあり、上記の使い分けが必要。
