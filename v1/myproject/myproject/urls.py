@@ -10,6 +10,7 @@ urlpatterns = [
     # user
     path('', include(([
         path('reservation/', include([
+            path('main/', views.UserViewSet.Reservation.Main.as_view(), name="main"),
             path('confirm/', views.UserViewSet.Reservation.Confirm.as_view(), name="confirm"),
             path('done/', views.UserViewSet.Reservation.Done.as_view(), name="done"),
             path('seat/', views.UserViewSet.Reservation.Seat.as_view(), name="seat"),
@@ -22,8 +23,11 @@ urlpatterns = [
     ], 'user'), namespace='user')),
 
     # accounts
-    path('accounts/login/', views.AccountsViewSet.Login.as_view(), name="login"),
-    path('accounts/signup/', views.AccountsViewSet.SignUp.as_view(), name="signup"),
+    path('accounts/', include(([
+        path('login/', views.AccountsViewSet.Login.as_view(), name="login"),
+        path('signup/', views.AccountsViewSet.SignUp.as_view(), name="signup"),
+        path('logout/', views.AccountsViewSet.Logout.as_view(), name="logout")
+    ], 'accounts'), namespace='accounts')),
 ]
 
 if settings.DEBUG:

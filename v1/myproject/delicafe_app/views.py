@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import logout
 from .forms import SignUpForm, LoginForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -47,6 +48,15 @@ class UserViewSet:
 # Djangoの起動時にURLconfが完全にロードされる前にクラス属性が評価されることがあり、上記の使い分けが必要。
 
 class AccountsViewSet:
+  class SignUp(CreateView):
+    form_class = SignUpForm
+    template_name = "accounts/signup.html"
+    success_url = reverse_lazy('accounts:login')
+    
+    def form_valid(self, form):
+      response = super().form_valid(form)
+      return response
+
   class Login(LoginView):
     form_class = LoginForm
     template_name = "accounts/login.html"
@@ -62,13 +72,10 @@ class AccountsViewSet:
     def form_invalid(self, form):
       messages.error(self.request, '※メールアドレスもしくはパスワードが間違っています。')
       return super().form_invalid(form)
-
-
-  class SignUp(CreateView):
-    form_class = SignUpForm
-    template_name = "accounts/signup.html"
-    success_url = reverse_lazy('login')
     
-    def form_valid(self, form):
-      response = super().form_valid(form)
-      return response
+  class Logout(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+      # セッションのクリア
+      logout(request)
+      return super().dispatch(request, *args, **kwargs)
+

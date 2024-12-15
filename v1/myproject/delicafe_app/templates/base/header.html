@@ -3,7 +3,7 @@
   <div class="flex">
     <div class="flex">
       <a
-        href="/home"
+        href="{% url 'user:home' %}"
         class="bg-blue-500 flex justify-center items-center text-white rounded-md w-20 h-10 mr-3"
       >
       Home
@@ -11,7 +11,7 @@
     </div>
     <div class="flex">
       <a
-        href="/login"
+        href="{% url 'accounts:logout'%}"
         class="bg-gray-500 flex justify-center items-center text-white rounded-md w-20 h-10 mr-3"
       >
       Logout

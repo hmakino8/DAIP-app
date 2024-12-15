@@ -16,9 +16,12 @@ from pathlib import Path
 # デフォルトのUserモデルをCustomUserに変更
 AUTH_USER_MODEL = 'delicafe_app.CustomUser'
 
-# ログイン
+# ログイン後のリダイレクト先
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'user:home'
+
+# ログアウト後のリダイレクト先
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
