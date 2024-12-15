@@ -20,12 +20,13 @@
         </div>
         {% endfor %}
         
-        <div class="flex justify-between">
-          <button class="text-blue-500">
-            <a href="{% url 'accounts:login' %}">
-              ログイン画面に戻る
-            </a>
-          </button>
+        <div class="flex justify-between items-center">
+          <a 
+            class="text-blue-500"
+            href="{% url 'accounts:login' %}"
+          >
+            ログイン画面に戻る
+          </a>
           <button
             type="submit"
             class="bg-green-500 text-white p-2 rounded-md w-20"
