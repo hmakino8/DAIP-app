@@ -7,49 +7,35 @@
 {% block content %}
 {% include 'base/header.html' %}
 <div class="flex flex-col items-center mx-auto w-full max-w-3xl">
-  <table class="w-full">
-    <thread>
-      <tr class="bg-gray-300">
+  {% if reservations %}
+    <table class="w-full">
+      <thread>
+        <tr class="bg-gray-300">
         <th class="border border-gray-200">予約番号</th>
         <th class="border border-gray-200">予約日時</th>
         <th class="border border-gray-200">座席番号</th>
         <th class="border border-gray-200">金額</th>
         <th class="border border-gray-200">取り消し</th>
-      </tr>
-    </thread>
-    <tbody class="text-center">
-      <tr>
-        <td class="border border-gray-200">123</td>
-        <td class="border border-gray-200">2024/12/13 13:00 ~ 14:00</td>
-        <td class="border border-gray-200">3</td>
-        <td class="border border-gray-200">1000円</td>
-        <td class="border border-gray-200">
-          <input type="checkbox" class="w-4 h-4">
-        </td>
-      </tr>
-      <tr>
-        <td class="border border-gray-200">124</td>
-        <td class="border border-gray-200">2024/12/15 13:00 ~ 14:00</td>
-        <td class="border border-gray-200">4</td>
-        <td class="border border-gray-200">1500円</td>
-        <td class="border border-gray-200">
-          <input type="checkbox" class="w-4 h-4">
-        </td>
-      </tr>
-      <tr>
-        <td class="border border-gray-200">125</td>
-        <td class="border border-gray-200">2024/12/16 13:00 ~ 14:00</td>
-        <td class="border border-gray-200">5</td>
-        <td class="border border-gray-200">0円</td>
-        <td class="border border-gray-200">
-          <input type="checkbox" class="w-4 h-4">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  {% with back_url="user:home" next_text="確認" next_url="user:reservation_cancel" %}
-    {% include 'base/footer.html' %}
+      </thread>
+      <tbody class="text-center">
+        {% for reservation in reservations %}
+          <tr>
+            <td class="border border-gray-200">{{ reservation.id }}</td>
+            <td class="border border-gray-200">{{ reservation.date }} {{ reservation.start_time }} ~ {{ reservation.end_time }}</td>
+            <td class="border border-gray-200">{{ reservation.seat_id }}</td>
+            <td class="border border-gray-200">¥{{ reservation.total_price }}</td>
+            <td class="border border-gray-200">
+              <input type="checkbox" class="w-4 h-4">
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>予約がありません</p>
+  {% endif %}
+  {% with back_url="user:home" %}
+    {% include 'base/footer2.html' %}
   {% endwith %}
 </div>
 {% endblock%}

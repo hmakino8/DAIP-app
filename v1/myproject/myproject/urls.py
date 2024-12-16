@@ -17,6 +17,8 @@ urlpatterns = [
             path('history/', views.UserViewSet.Reservation.History.as_view(), name="reservation_history"),
             path('cancel/', views.UserViewSet.Reservation.Cancel.as_view(), name="reservation_cancel"),
             path('cancel/done/', views.UserViewSet.Reservation.CancelDone.as_view(), name="reservation_cancel_done"),
+            path('pre-order/', views.UserViewSet.Reservation.PreOrder.as_view(), name="reservation_pre_order"),
+            path('delete_cart_item/<int:item_id>/', views.UserViewSet.Reservation.PreOrder.DeleteCartItem.as_view(), name="delete_cart_item"),
         ])),
 
         path('home/', views.UserViewSet.Home.as_view(), name="home"),

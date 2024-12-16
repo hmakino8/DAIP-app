@@ -1,0 +1,42 @@
+
+{% extends "base/base.html" %}
+
+{% block title %}事前オーダー{% endblock %}
+
+{% block main_padding %}pt-24{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' %}
+
+<div class="mx-auto w-full max-w-5xl">
+  <form method="POST">
+    {% csrf_token %}
+    {% if products %}
+      <div class="flex flex-wrap justify-center items-center">
+        {% for product in products %}
+        <div class="m-2">
+          <div class="flex flex-col justify-between rounded shadow-md w-48 h-48 m-5 p-2">
+            <div>
+              <p class="text-center p-2">{{ product.name }}</p>
+              <p class="text-center">¥{{ product.price }}</p>
+            </div>
+            <button 
+              class="bg-green-500 text-white h-8 rounded"
+              type="submit"
+              name="product_id"
+              value="{{ product.id }}">
+              追加
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center">商品がありません</div>
+    {% endif %}
+  </form>
+  {% with back_url="user:reservation_main" %}
+    {% include 'base/footer2.html' %}
+  {% endwith %}
+</div>
+{% endblock %}
