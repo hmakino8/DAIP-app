@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Reservation, Product, OrderItem
+from .models import CustomUser, Reservation, Product, OrderItem, TempOrder, TempOrderItem
 
 class CustomUserAdmin(UserAdmin):
   model = CustomUser
@@ -29,8 +29,15 @@ class OrderItemAdmin(admin.ModelAdmin):
   list_filter = ('reservation__date',)
   search_fields = ('reservation__reservation_id', 'product__name')
   ordering = ('-reservation__date',)
+  
+class TempOrderAdmin(admin.ModelAdmin):
+  list_display = ('user', 'date', 'time_start', 'time_end', 'seat_number')
+  list_filter = ('date',)
+  search_fields = ('user__username', 'seat_number')
+  ordering = ('-date',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Reservation, ReservationAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
+admin.site.register(TempOrder, TempOrderAdmin)

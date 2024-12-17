@@ -8,80 +8,115 @@
 {% include 'base/header.html' %}
 <div class="flex flex-col items-center mx-auto w-full max-w-xl">
 
-    <div class="flex flex-col items-center mb-10 w-full">
-      <a
-        type="submit"
-        class="bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
+  <div class="flex flex-col items-center mb-10 w-full">
+    <a
+      type="submit"
+      class="flex items-center justify-center bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
+      {% if temp_orders.count == 0 %}
         href="{% url 'user:reservation_calendar' %}"
-      >
+      {% endif %}
+    >
+      <span class="material-symbols-outlined">
+        calendar_month
+      </span>
       座席予約
-      </a>
+    </a>
 
-      <div class="w-full border bg-gray-100 rounded-md">
-        {% if reservations %}
-          {% for reservation in reservations %}
-          <div class="flex w-full border-b">
-            <div class="w-1/3">予約日時：</div>
-            <div class="w-2/3 text-center">
-              {{ reservation.date }} {{ reservation.start_time }} ~ {{ reservation.end_time }}
-            </div>
-          </div>
+    <div class="w-full rounded-md">
+      {% if temp_orders %}
+        {% for temp_order in temp_orders %}
+          <div class="flex justify-center w-10/12 mx-auto items-center">
 
-          <div class="flex w-full">
-            <div class="w-1/3">座席番号：</div>
-              <div class="w-2/3 text-center">{{ reservation.seat_id }}</div>
-            </div>
-          {% endfor %}
-        {% else %}
-          <div class="text-center">
-            予約がありません
-          </div>
-        {% endif %}
-      </div>
-  </div>
-      
-    <div class="flex flex-col items-center h-auto w-full">
-      <a
-        type="submit"
-        class="bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
-        href="{% url 'user:reservation_pre_order' %}"
-      >
-      事前オーダー
-      </a>
-      <p class="text-sm text-red-500">※事前オーダーで商品価格10%off</p>
+            <div class="flex w-full bg-gray-100 border rounded-md mb-2">
+              <div class="w-full">
+                <div class="flex w-full text-center items-center">
+                  <div class="w-1/3">予約日時</div>
+                  <div class="w-2/3 border-l border-r">
+                    {{ temp_order.date }} {{ temp_order.time_start }} ~ {{ temp_order.time_end }}
+                  </div>
+                </div>
 
-      <div class="w-full border bg-gray-100 rounded-md">
-        {% if cart_items %}
-          {% for cart_item in cart_items %}
-          <div class="flex items-center w-full border-b p-2">
-            <div class="w-3/4">{{ cart_item.product.name }}</div>
-            <div class="border-l w-2/5 text-center">{{ cart_item.quantity }}点</div>
-            <div class="flex items-center w-2/5">
-              <div class="text-sm border-l w-1/2 text-center" style= "text-decoration: line-through double; text-decoration-color: #EF4444;" >
-                ¥{{ cart_item.total_price }}
+                <div class="flex w-full text-center items-center">
+                  <div class="w-1/3">座席番号</div>
+                  <div class="w-2/3 border-l border-r">
+                    {{ temp_order.seat_number }}
+                  </div>
+                </div>
               </div>
-              <div class="w-1/2 text-center">
-                ¥{{ cart_item.total_discount_price }}
-              </div>
-            </div>
-            <div class="border-l flex justify-center items-center w-1/5">
-              <form method="post" action="{% url 'user:delete_cart_item' cart_item.id %}">
+
+              <form 
+                action="{% url 'user:delete_temp_order' temp_order.id %}"
+                method="post"
+                class="flex items-center justify-center"
+              >
                 {% csrf_token %}
-                <button 
-                  type="submit"
-                  class="text-sm w-[40px] bg-gray-300 border rounded-md"
-                >削除</button>
+                <button class="flex items-center justify-center p-2">
+                  <span class="material-symbols-outlined text-gray-500">
+                    remove
+                  </span>
+                </button>
               </form>
             </div>
+
           </div>
-          {% endfor %}
-        {% else %}
-          <div class="w-full text-center">オーダーはありません</div>
-        {% endif %}
-      </div>
-      {% with back_url="user:home" next_text="確認" next_url="user:reservation_confirm" %}
-        {% include 'base/footer.html' %}
-      {% endwith %}
+        {% endfor %}
+      {% else %}
+        <div class="text-center text-gray-500">
+          予約する座席を選択してください
+        </div>
+      {% endif %}
     </div>
+  </div>
+
+  <div class="flex flex-col items-center h-auto w-full">
+    <a
+      type="submit"
+      class="flex items-center justify-center bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
+      href="{% url 'user:reservation_pre_order' %}"
+    >
+      <span class="material-symbols-outlined">
+        shopping_cart
+      </span>
+      商品カート
+    </a>
+    <p class="text-sm text-red-500">事前オーダーで商品価格10%off！</p>
+
+    {% if cart_items %}
+      <div class="w-10/12 mx-auto rounded-md">
+        {% for cart_item in cart_items %}
+          <div class="flex items-center border rounded-md bg-gray-100 mb-2">
+
+            <div class="w-3/5">{{ cart_item.product.name }}</div>
+            <div class="flex w-2/5">
+              <div class="border-l w-2/5 text-center">{{ cart_item.quantity }}点</div>
+              <div class="flex items-center w-3/5">
+                <div class="text-sm border-l w-1/2 text-center" style="text-decoration: line-through double; text-decoration-color: #EF4444;" >
+                  ¥{{ cart_item.total_price }}
+                </div>
+                <div class="w-1/2 text-center">
+                  ¥{{ cart_item.total_discount_price }}
+                </div>
+              </div>
+            </div>
+
+
+            <form method="post" action="{% url 'user:delete_cart_item' cart_item.id %}">
+              {% csrf_token %}
+              <button class="flex items-center justify-center border-l p-2">
+                <span class="material-symbols-outlined text-gray-500">
+                  remove
+                </span>
+              </button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="w-full text-center text-gray-500">カートは空です</div>
+    {% endif %}
+  </div>
+  {% with back_url="user:home" next_text="確認" next_url="user:reservation_confirm" %}
+    {% include 'base/footer.html' %}
+  {% endwith %}
 </div>
 {% endblock%}

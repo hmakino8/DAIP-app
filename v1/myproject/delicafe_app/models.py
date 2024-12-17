@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.utils import timezone
 # デフォルトのUserモデルを継承してroleを追加
 # IDにはメールアドレスを使用
 class CustomUser(AbstractUser):
@@ -75,6 +75,17 @@ class OrderItem(models.Model):
   @property
   def total(self) -> int:
     return int(self.subtotal_in_tax * self.quantity)
+  
+class TempOrder(models.Model):
+  user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+  date = models.DateField(null=True, blank=True )
+  time_start = models.TimeField(null=True, blank=True)
+  time_end = models.TimeField(null=True, blank=True)
+  seat_number = models.CharField(max_length=20, null=True, blank=True)
+  created_at = models.DateTimeField(default=timezone.now)
+  
+  class Meta:
+    ordering = ['-created_at']
 
 class TempOrderItem(models.Model):
   user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
