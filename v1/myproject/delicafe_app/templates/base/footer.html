@@ -8,11 +8,17 @@
     </a>
   </div>
   <div class="flex">
-    <a
-      href="{% url next_url %}"
-      class="{{ next_color|default:'bg-blue-500' }} flex justify-center items-center text-white rounded-md w-20 h-10"
-    >
-    {{ next_text|default:'次へ' }}
-    </a>
+    {% if form_id %}
+      <button type="submit" form="{{ form_id }}" class="{{ next_color|default:'bg-blue-500' }} flex justify-center items-center text-white rounded-md w-20 h-10">
+        {{ next_text|default:'次へ' }}
+      </button>
+    {% else %}
+      <a
+        href="{% url next_url %}"
+        class="{{ next_color|default:'bg-blue-500' }} flex justify-center items-center text-white rounded-md w-20 h-10"
+      >
+        {{ next_text|default:'次へ' }}
+      </a>
+    {% endif %}
   </div>
 </div>

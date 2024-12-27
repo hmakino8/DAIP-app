@@ -12,8 +12,8 @@
     <a
       type="submit"
       class="flex items-center justify-center bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
-      {% if temp_orders.count == 0 %}
-        href="{% url 'user:reservation_calendar' %}"
+      {% if not reservation_draft %}
+        href="{% url 'user:reservation_calendar' %}?week_offset=0&seat=1"
       {% endif %}
     >
       <span class="material-symbols-outlined">
@@ -23,29 +23,28 @@
     </a>
 
     <div class="w-full rounded-md">
-      {% if temp_orders %}
-        {% for temp_order in temp_orders %}
+        {% if reservation_draft %}
           <div class="flex justify-center w-10/12 mx-auto items-center">
 
             <div class="flex w-full bg-gray-100 border rounded-md mb-2">
               <div class="w-full">
                 <div class="flex w-full text-center items-center">
-                  <div class="w-1/3">予約日時</div>
-                  <div class="w-2/3 border-l border-r">
-                    {{ temp_order.date }} {{ temp_order.time_start }} ~ {{ temp_order.time_end }}
+                  <div class="w-1/4">予約日時</div>
+                  <div class="w-3/4 border-l border-r">
+                    {{ reservation_draft.date }} {{ reservation_draft.time_start }} ~ {{ reservation_draft.time_end }}
                   </div>
                 </div>
 
                 <div class="flex w-full text-center items-center">
-                  <div class="w-1/3">座席番号</div>
-                  <div class="w-2/3 border-l border-r">
-                    {{ temp_order.seat_number }}
+                  <div class="w-1/4">座席番号</div>
+                  <div class="w-3/4 border-l border-r">
+                    {{ reservation_draft.seat_number }}
                   </div>
                 </div>
               </div>
 
               <form 
-                action="{% url 'user:delete_temp_order' temp_order.id %}"
+                action="{% url 'user:delete_reservation_draft' reservation_draft.id %}"
                 method="post"
                 class="flex items-center justify-center"
               >
@@ -59,7 +58,6 @@
             </div>
 
           </div>
-        {% endfor %}
       {% else %}
         <div class="text-center text-gray-500">
           予約する座席を選択してください
@@ -91,14 +89,13 @@
               <div class="border-l w-2/5 text-center">{{ cart_item.quantity }}点</div>
               <div class="flex items-center w-3/5">
                 <div class="text-sm border-l w-1/2 text-center" style="text-decoration: line-through double; text-decoration-color: #EF4444;" >
-                  ¥{{ cart_item.total_price }}
+                  ¥{{ cart_item.total }}
                 </div>
                 <div class="w-1/2 text-center">
-                  ¥{{ cart_item.total_discount_price }}
+                  ¥{{ cart_item.total_after_discount }}
                 </div>
               </div>
             </div>
-
 
             <form method="post" action="{% url 'user:delete_cart_item' cart_item.id %}">
               {% csrf_token %}
@@ -115,7 +112,7 @@
       <div class="w-full text-center text-gray-500">カートは空です</div>
     {% endif %}
   </div>
-  {% with back_url="user:home" next_text="確認" next_url="user:reservation_confirm" %}
+  {% with back_url="user:home" next_text="確認" next_url=reservation_draft|yesno:"user:reservation_confirm,user:reservation_main" %}
     {% include 'base/footer.html' %}
   {% endwith %}
 </div>

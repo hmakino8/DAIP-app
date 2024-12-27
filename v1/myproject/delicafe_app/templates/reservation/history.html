@@ -15,17 +15,25 @@
         <th class="border border-gray-200">予約日時</th>
         <th class="border border-gray-200">座席番号</th>
         <th class="border border-gray-200">金額</th>
-        <th class="border border-gray-200">取り消し</th>
+        <th class="border border-gray-200">取消</th>
       </thread>
       <tbody class="text-center">
         {% for reservation in reservations %}
           <tr>
-            <td class="border border-gray-200">{{ reservation.id }}</td>
-            <td class="border border-gray-200">{{ reservation.date }} {{ reservation.start_time }} ~ {{ reservation.end_time }}</td>
-            <td class="border border-gray-200">{{ reservation.seat_id }}</td>
-            <td class="border border-gray-200">¥{{ reservation.total_price }}</td>
+            <td class="border border-gray-200 text-center">{{ reservation.reservation_number }}</td>
+            <td class="border border-gray-200 text-center">{{ reservation.date }} {{ reservation.time_start }} ~ {{ reservation.time_end }}</td>
+            <td class="border border-gray-200 text-center">{{ reservation.seat_number }}</td>
+            <td class="border border-gray-200 text-center">¥{{ reservation.total_with_tax }}</td>
             <td class="border border-gray-200">
-              <input type="checkbox" class="w-4 h-4">
+              <form method="get">
+                <a
+                  href="{% url 'user:reservation_cancel' reservation.id %}"
+                  class="flex items-center justify-center mx-auto">
+                  <span class="material-symbols-outlined text-gray-500 rounded-full">
+                    remove
+                  </span>
+                </a>
+              </form>
             </td>
           </tr>
         {% endfor %}

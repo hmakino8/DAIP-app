@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+import string, random
+
+
 # デフォルトのUserモデルを継承してroleを追加
 # IDにはメールアドレスを使用
 class CustomUser(AbstractUser):
@@ -10,15 +13,41 @@ class CustomUser(AbstractUser):
   USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = ['username']
 
+  @property
+  def cart_total(self) -> int:
+    return sum(item.total for item in self.cartitem_set.all())
+  
+  @property
+  def cart_discount_amount(self) -> int:
+    return sum(item.discount_amount for item in self.cartitem_set.all())
+
+  @property
+  def cart_total_after_discount(self) -> int:
+    return int(self.cart_total - self.cart_discount_amount )
+  
+  @property
+  def cart_tax_amount(self) -> int:
+    return int(self.cart_total_after_discount * 0.1)
+
+  @property
+  def cart_total_with_tax(self) -> int:
+    return int(self.cart_total_after_discount + self.cart_tax_amount)
+
 
 class Reservation(models.Model):
   user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-  reservation_id = models.CharField(max_length=20, unique=True)
+  reservation_number = models.CharField(max_length=20, unique=True)
   date = models.DateField()
-  start_time = models.TimeField()
-  end_time = models.TimeField()
-  seat_id = models.IntegerField()
+  time_start = models.TimeField()
+  time_end = models.TimeField()
+  seat_number = models.IntegerField()
   created_at = models.DateTimeField(auto_now_add=True)
+  total = models.IntegerField(default=0)
+  item_count = models.IntegerField(default=0)
+  discount_amount = models.IntegerField(default=0)
+  total_after_discount = models.IntegerField(default=0)
+  tax_amount = models.IntegerField(default=0)
+  total_with_tax = models.IntegerField(default=0)
   status = models.CharField(
     max_length=20,
     choices=[
@@ -30,16 +59,36 @@ class Reservation(models.Model):
     default='active'
   )
   
+  def save(self, *args, **kwargs):
+    if not self.reservation_number:
+      self.reservation_number = self._generate_reservation_number()
+    super().save(*args, **kwargs)
+    
+  def _generate_reservation_number(self) -> str:
+    date_time = self.date.strftime('%m%d') + self.time_start.strftime('%H%M')
+    seat_part = str(self.seat_number).zfill(2) #座席番号を２桁でゼロ埋め
+    chars = string.ascii_letters + string.digits
+    random_part = ''.join(random.choices(chars, k=4)) #ランダムな英数字4文字
+    
+    reservation_number = f"{date_time}-{seat_part}-{random_part}"
+    
+    # 重複チェック。重複する場合は重複しなくなるまで再度乱数を生成し、reservation_numberを更新
+    while Reservation.objects.filter(reservation_number=reservation_number).exists():
+      random_part = ''.join(random.choices(chars, k=4))
+      reservation_number = f"{date_time}-{seat_part}-{random_part}"
+      
+    return reservation_number
+
   # self.orderitem_set.all()でOrderItemのインスタンスを取得
   # DjangoのORMのリレーションの仕組み
   # OrderItemモデルで外部キーを定義すると、Djangoは自動的に逆方向のリレーションを作成する。
   # そのため、ReservationモデルのインスタンスからOrderItemモデルのインスタンスを取得できる。
   # SELECT * FROM orderitem WHERE reservation_id = <self.id>
-
-  @property
-  def total_price(self) -> int:
-    order_items = self.orderitem_set.all()
-    return sum(item.total for item in order_items)
+  
+  # @property
+  # def total_price(self) -> int:
+  #   order_items = self.orderitem_set.all()
+  #   return sum(item.total for item in order_items)
 
   class Meta:
     ordering = ['-created_at']
@@ -55,52 +104,73 @@ class OrderItem(models.Model):
   reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
   product = models.ForeignKey(Product, on_delete=models.PROTECT)
   quantity = models.IntegerField(default=0)
-  price_at_order = models.IntegerField(default=0)
-  tax_rate = models.FloatField(default=0.1)
-  pre_order_discount = models.FloatField(default=0.1)
-  
-  def save(self, *args, **kwargs):
-    if not self.price_at_order:
-      self.price_at_order = self.product.price
-    super().save(*args, **kwargs)
-    
-  @property
-  def subtotal_ex_tax(self) -> int:
-    return int(self.price_at_order * (1 - self.pre_order_discount))
+  total = models.IntegerField(default=0)
+
+class CartItem(models.Model):
+  user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+  product = models.ForeignKey(Product, on_delete=models.PROTECT)
+  quantity = models.IntegerField(default=0)
+  created_at = models.DateTimeField(auto_now_add=True)
+  discount_rate = models.FloatField(default=0.1)
 
   @property
-  def subtotal_in_tax(self) -> int:
-    return int(self.subtotal_ex_tax * (1 + self.tax_rate))
+  def total(self) -> int:
+    return int(self.product.price * self.quantity)
+
+  @property
+  def discount_amount(self) -> int:
+    return int(self.total * self.discount_rate)
   
   @property
-  def total(self) -> int:
-    return int(self.subtotal_in_tax * self.quantity)
-  
-class TempOrder(models.Model):
-  user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-  date = models.DateField(null=True, blank=True )
+  def total_after_discount(self) -> int:
+    return int(self.total - self.discount_amount)
+
+  @property
+  def tax_amount(self) -> int:
+    return int(self.total_after_discount * 0.1)
+
+  @property
+  def total_with_tax(self) -> int:
+    return int(self.total_after_discount + self.tax_amount)
+
+  class Meta:
+    ordering = ['-created_at']
+
+class ReservationDraft(models.Model):
+  user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+  date = models.DateField(null=True, blank=True)
   time_start = models.TimeField(null=True, blank=True)
   time_end = models.TimeField(null=True, blank=True)
   seat_number = models.CharField(max_length=20, null=True, blank=True)
   created_at = models.DateTimeField(default=timezone.now)
-  
-  class Meta:
-    ordering = ['-created_at']
-
-class TempOrderItem(models.Model):
-  user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-  product = models.ForeignKey(Product, on_delete=models.PROTECT)
-  quantity = models.IntegerField(default=0)
-  created_at = models.DateTimeField(auto_now_add=True)
-  pre_order_discount = models.FloatField(default=0.1)
 
   @property
-  def total_price(self) -> int:
-    return int(self.product.price * self.quantity)
+  def cart_items(self):
+    return CartItem.objects.filter(user=self.user)
+
+  @property
+  def item_count(self) -> int:
+    return sum(item.quantity for item in self.cart_items)
   
   @property
-  def total_discount_price(self) -> int:
-    return int(self.total_price * (1 - self.pre_order_discount))
+  def cart_total(self) -> int:
+    return sum(item.total for item in self.cart_items)
+  
+  @property
+  def cart_discount_amount(self) -> int:
+    return sum(item.discount_amount for item in self.cart_items)
 
+  @property
+  def cart_total_after_discount(self) -> int:
+    return int(self.cart_total - self.cart_discount_amount )
+  
+  @property
+  def cart_tax_amount(self) -> int:
+    return int(self.cart_total_after_discount * 0.1)
+
+  @property
+  def cart_total_with_tax(self) -> int:
+    return int(self.cart_total_after_discount + self.cart_tax_amount)
+  
   class Meta:
     ordering = ['-created_at']
