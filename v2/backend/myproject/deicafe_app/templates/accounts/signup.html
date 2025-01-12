@@ -1,0 +1,40 @@
+{% extends "base/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}新規登録{% endblock %}
+
+{% block content %}
+  <div class="flex justify-center items-center h-screen">
+    <div class="p-8 rounded shadow-md w-[400px] bg-gray-100">
+      <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="mb-5">
+          {{ field|add_class:"w-full p-2 border rounded-md" }}
+          {% if field.errors %}
+            {% for error in field.errors %}
+              <p class="text-red-500 text-sm">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+        {% endfor %}
+        
+        <div class="flex justify-between items-center">
+          <a 
+            class="text-blue-500"
+            href="{% url 'accounts:login' %}"
+          >
+            ログイン画面に戻る
+          </a>
+          <button
+            type="submit"
+            class="bg-green-500 text-white p-2 rounded-md w-20"
+          >
+            登録
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

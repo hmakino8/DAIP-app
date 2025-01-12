@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+
+{% block title %}予約履歴{% endblock %}
+
+{% block main_padding %}pt-24{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' %}
+<div class="flex flex-col items-center mx-auto w-full max-w-3xl">
+  {% if reservations %}
+    <table class="w-full">
+      <thread>
+        <tr class="bg-gray-300">
+        <th class="border border-gray-200">予約番号</th>
+        <th class="border border-gray-200">予約日時</th>
+        <th class="border border-gray-200">座席番号</th>
+        <th class="border border-gray-200">金額</th>
+        <th class="border border-gray-200">取消</th>
+      </thread>
+      <tbody class="text-center">
+        {% for reservation in reservations %}
+          <tr>
+            <td class="border border-gray-200 text-center">{{ reservation.reservation_number }}</td>
+            <td class="border border-gray-200 text-center">{{ reservation.date }} {{ reservation.time_start }} ~ {{ reservation.time_end }}</td>
+            <td class="border border-gray-200 text-center">{{ reservation.seat_number }}</td>
+            <td class="border border-gray-200 text-center">¥{{ reservation.total_with_tax }}</td>
+            <td class="border border-gray-200">
+              <form method="get">
+                <a
+                  href="{% url 'user:reservation_cancel' reservation.id %}"
+                  class="flex items-center justify-center mx-auto">
+                  <span class="material-symbols-outlined text-gray-500 rounded-full">
+                    remove
+                  </span>
+                </a>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>予約がありません</p>
+  {% endif %}
+  {% with back_url="user:home" %}
+    {% include 'base/footer2.html' %}
+  {% endwith %}
+</div>
+{% endblock%}
