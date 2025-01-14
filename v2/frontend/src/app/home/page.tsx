@@ -9,34 +9,78 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Account } from "./components/Account";
 import { Login } from "./components/Login";
+import useSWR, { mutate } from "swr";
+import type { UserInfo } from "../common/types";
+import { Signup } from "./components/Signup";
 
 export const LoadingSpinner = () => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-white">
-      <div className="animate-spin h-20 w-20 border-4 border-green-400 rounded-full border-t-transparent"></div>
+    <div className="fixed inset-0 max-w-lg mx-auto flex justify-center items-center shadow-2xl">
+      <div className="relative">
+        <div className="w-16 h-16 border-4 border-gray-100 rounded-full animate-[spin_2s_ease-in-out_infinite]">
+          <div className="absolute top-0 left-0 w-16 h-16 border-4 border-gray-200 rounded-full animate-[spin_1s_cubic-bezier(0.6,0.2,0.4,0.8)_infinite] border-t-transparent"></div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+      </div>
     </div>
   );
 };
 
 export default function HomePage() {
-  const [activeModal, setActiveModal] = useState<string>("");
-  const { userInfo, isLoading } = getAuthenticatedUser(activeModal);
-  const router = useRouter();
+  const [activeModal, setActiveModal] = useState<string>("DeactivateClose");
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchUserInfo = async () => {
+    try {
+      setIsLoading(true);
+      const user: UserInfo | null = await getAuthenticatedUser();
+      setUserInfo(user);
+    } catch (error) {
+      console.error("ユーザー情報取得エラー:", error);
+      setUserInfo(null);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchUserInfo();
+  // }, []);
+
+  const handleActiveModal = async (modalName: string) => {
+    setActiveModal(modalName);
+    // if (modalName == "DeactivateDone") {
+    //   setTimeout(async () => {
+    //     await fetchUserInfo();
+    //   }, 300);
+    // }
+    if (modalName == "DeactivateDone") {
+      await fetchUserInfo();
+    }
+  };
 
   useEffect(() => {
-    if (activeModal) {
+    if (activeModal !== "DeactivateDone" && activeModal !== "DeactivateClose") {
       document.body.classList.add("overflow-hidden");
     } else {
       document.body.classList.remove("overflow-hidden");
     }
   }, [activeModal]);
 
+  useEffect(() => {
+    if (isLoading) {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
   const handleLogout = async (
-    setActiveModal: (activeModal: string) => void
+    handleActiveModal: (activeModal: string) => void
   ) => {
     try {
       const csrfResponse = await fetch(
@@ -57,10 +101,7 @@ export default function HomePage() {
       });
 
       if (response.ok) {
-        setActiveModal("");
-        router.refresh();
-        // setActiveModal("Login");
-        // router.push("/home");
+        handleActiveModal("DeactivateDone");
       } else {
         console.error("ログアウトに失敗しました");
       }
@@ -75,7 +116,7 @@ export default function HomePage() {
         <Header
           userInfo={userInfo}
           activeModal={activeModal}
-          setActiveModal={setActiveModal}
+          handleActiveModal={handleActiveModal}
         />
       </div>
       <div className="relative w-full">
@@ -99,7 +140,7 @@ export default function HomePage() {
           <div className="w-full my-5 h-[100px] bg-white rounded-md"></div>
         </div>
       )}
-      <div className="p-5 h-auto w-full bg-gray-50 text-sm mb-20">
+      <div className="p-5 h-auto w-full bg-gray-50 text-sm pb-28">
         <p className="font-bold w-full text-2xl text-start">Information</p>
 
         <div className="flex w-full py-5 border-b border-gray-300 max-h-40">
@@ -167,10 +208,10 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      {!userInfo && <Footer />}
+      {!userInfo && <Footer handleActiveModal={handleActiveModal} />}
       <Footer2 />
       <AnimatePresence>
-        {activeModal && (
+        {activeModal === "Account" && (
           <motion.div
             initial={{ opacity: 0, y: 1000 }}
             animate={{ opacity: 1, y: 0 }}
@@ -178,16 +219,39 @@ export default function HomePage() {
             transition={{ duration: 0.3 }}
             className="fixed max-w-lg mx-auto z-20 top-10 right-0 left-0 flex items-center justify-center"
           >
-            {activeModal === "Account" && (
-              <Account
-                userName={userInfo?.username}
-                email={userInfo?.email}
-                handleLogout={() => handleLogout(setActiveModal)}
-              />
-            )}
-            {activeModal === "Login" && (
-              <Login setActiveModal={setActiveModal} />
-            )}
+            <Account
+              userName={userInfo?.username}
+              email={userInfo?.email}
+              handleLogout={() => handleLogout(handleActiveModal)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activeModal === "Login" && (
+          <motion.div
+            initial={{ opacity: 0, x: 500 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 500 }}
+            transition={{ duration: 0.3 }}
+            className="fixed max-w-lg mx-auto z-20 top-10 right-0 left-0 flex items-center justify-center"
+          >
+            <Login handleActiveModal={handleActiveModal} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activeModal === "Signup" && (
+          <motion.div
+            initial={{ opacity: 0, x: -500 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -500 }}
+            transition={{ duration: 0.3 }}
+            className="fixed max-w-lg mx-auto z-20 top-10 right-0 left-0 flex items-center justify-center"
+          >
+            <Signup handleActiveModal={handleActiveModal} />
           </motion.div>
         )}
       </AnimatePresence>

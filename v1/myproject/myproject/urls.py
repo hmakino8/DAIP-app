@@ -1,14 +1,23 @@
 from django.contrib import admin
 from django.urls import path, include
-from delicafe_app import views
+from deicafe_app import views
 from django.conf import settings
 
 urlpatterns = [
   # admin
   path('admin/', admin.site.urls),
 
+  # accounts
+  path('accounts/', include(([
+      path('login/', views.AccountsViewSet.Login.as_view(), name="login"),
+      path('signup/', views.AccountsViewSet.SignUp.as_view(), name="signup"),
+      path('logout/', views.AccountsViewSet.Logout.as_view(), name="logout")
+  ], 'accounts'), namespace='accounts')),
+
   # user
   path('', include(([
+    path('home/', views.UserViewSet.Home.as_view(), name="home"),
+
     path('reservation/', include([
       path('main/', views.UserViewSet.Reservation.Main.as_view(), name="reservation_main"),
       path('confirm/', views.UserViewSet.Reservation.Confirm.as_view(), name="reservation_confirm"),
@@ -23,15 +32,13 @@ urlpatterns = [
       path('delete_reservation_draft/<int:reservation_draft_id>/', views.UserViewSet.Reservation.Main.DeleteReservationDraft.as_view(), name="delete_reservation_draft"),
     ])),
 
-      path('home/', views.UserViewSet.Home.as_view(), name="home"),
   ], 'user'), namespace='user')),
 
-  # accounts
-  path('accounts/', include(([
-      path('login/', views.AccountsViewSet.Login.as_view(), name="login"),
-      path('signup/', views.AccountsViewSet.SignUp.as_view(), name="signup"),
-      path('logout/', views.AccountsViewSet.Logout.as_view(), name="logout")
-  ], 'accounts'), namespace='accounts')),
+  # staff
+  path('staff/', include(([
+    path('home/', views.StaffViewSet.Home.as_view(), name="home"),
+  ], 'staff'), namespace='staff')),
+
 ]
 
 # save時に画面を自動リロード

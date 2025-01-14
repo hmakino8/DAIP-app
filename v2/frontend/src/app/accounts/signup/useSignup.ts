@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { signupFormData } from "../config";
 import type { ValidationErrors } from "../types";
 
-export const useSignup = () => {
+export const useSignup = (handleActiveModal: (activeModal: string) => void) => {
   const [formValues, setFormValues] = useState({
     username: "",
     email: "",
@@ -47,7 +47,7 @@ export const useSignup = () => {
       console.log(data);
 
       if (response.ok) {
-        router.push("/accounts/login");
+        handleActiveModal("Login");
       } else {
         const errorMessages: ValidationErrors = {};
 

@@ -7,17 +7,8 @@ export const Footer2 = () => {
   const pathname = usePathname();
 
   return (
-    <div className="z-10 fixed bottom-0 left-0 right-0 max-w-lg px-3 mx-auto bg-white/90 backdrop-blur-sm border-b-2 h-20 flex items-center justify-center shadow-md">
-      {/* <Link href="/home" className="p-3">
-        <img
-          src="/images/deicafé_logo.png"
-          alt="deicafé_logo"
-          width={60}
-          height={60}
-          className="object-cover rounded-sm"
-        />
-      </Link> */}
-      <div className="flex text-gray-500">
+    <div className="z-10 fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-white/90 backdrop-blur-sm border-b-2 h-20 flex items-center shadow-2xl">
+      <div className="w-full flex text-gray-500">
         <NavigationButton
           icon="home"
           label="Home"

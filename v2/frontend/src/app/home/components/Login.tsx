@@ -5,12 +5,12 @@ import { AuthLayout } from "@/accounts/components/AuthLayout";
 import { AuthForm } from "@/accounts/components/AuthForm";
 
 export const Login = ({
-  setActiveModal,
+  handleActiveModal,
 }: {
-  setActiveModal: (activeModal: string) => void;
+  handleActiveModal: (activeModal: string) => void;
 }) => {
   const { handleSubmit, loginFormData, formValues, handleChange, message } =
-    useLogin();
+    useLogin(handleActiveModal);
 
   return (
     <AuthLayout>
@@ -23,7 +23,7 @@ export const Login = ({
         linkText="アカウントを作成する"
         linkHref="/accounts/signup"
         submitText="ログイン"
-        setActiveModal={setActiveModal}
+        handleActiveModal={handleActiveModal}
       />
     </AuthLayout>
   );

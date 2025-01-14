@@ -1,11 +1,15 @@
+"use client";
+
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import "./globals.css";
+import { SWRConfig } from "swr";
+import { API_BASE_URL } from "./common/config";
 
-export const metadata: Metadata = {
-  title: "deicafe",
-  description: "deicafe Reservation System",
-};
+// export const metadata: Metadata = {
+//   title: "deicafe",
+//   description: "deicafe Reservation System",
+// };
 
 export default function RootLayout({
   children,
@@ -21,7 +25,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-gray-50">
-        <div className="max-w-lg mx-auto bg-white">{children}</div>
+        <div className="max-w-lg mx-auto bg-white shadow-2xl">{children}</div>
       </body>
     </html>
   );

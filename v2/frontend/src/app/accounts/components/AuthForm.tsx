@@ -13,7 +13,7 @@ type AuthFormProps = {
   linkText: string;
   linkHref: string;
   submitText: string;
-  setActiveModal: (activeModal: string) => void;
+  handleActiveModal: (activeModal: string) => void;
 };
 
 export const AuthForm = ({
@@ -25,7 +25,7 @@ export const AuthForm = ({
   linkText,
   linkHref,
   submitText,
-  setActiveModal,
+  handleActiveModal,
 }: AuthFormProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -38,7 +38,7 @@ export const AuthForm = ({
         handleSubmit(e);
       }}
     >
-      {pathname == "/accounts/login" && messages?.message && (
+      {submitText === "ログイン" && messages?.message && (
         <div className="py-2 text-red-500 text-sm text-center">
           {messages.message}
         </div>
@@ -61,19 +61,24 @@ export const AuthForm = ({
         </div>
       ))}
       <div className="flex justify-between items-center">
-        <Link className={"text-blue-500 hover:text-blue-400"} href={linkHref}>
+        <button
+          type="button"
+          className={"text-blue-500 hover:text-blue-400"}
+          onClick={() => {
+            handleActiveModal(
+              `${submitText === "ログイン" ? "Signup" : "Login"}`
+            );
+          }}
+        >
           {linkText}
-        </Link>
+        </button>
         <button
           type="submit"
           className={`${
-            pathname == "/accounts/login"
+            submitText === "ログイン"
               ? "bg-blue-500 hover:bg-blue-400"
               : "bg-green-500 hover:bg-green-400"
           } text-white p-2 rounded-full shadow-lg w-24 h-12`}
-          onClick={() => {
-            submitText === "ログイン" && setActiveModal("");
-          }}
         >
           {submitText}
         </button>

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginFormData } from "../config";
+import { useSWRConfig } from "swr";
 import type { ValidationErrors } from "../types";
 
-export const useLogin = () => {
+export const useLogin = (handleActiveModal: (activeModal: string) => void) => {
+  const { mutate } = useSWRConfig();
   const [formValues, setFormValues] = useState({
     username: "",
     password: "",
@@ -44,7 +46,12 @@ export const useLogin = () => {
       });
 
       if (response.ok) {
-        router.push("/home");
+        const userResponse = await fetch("http://localhost:8000/api/user/", {
+          credentials: "include",
+        });
+        if (userResponse.ok) {
+          handleActiveModal("DeactivateDone");
+        }
       } else {
         console.log("不正なレスポンス");
         setMessage("メールアドレスもしくはパスワードが正しくありません");

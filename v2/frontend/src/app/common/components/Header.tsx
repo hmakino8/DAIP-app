@@ -7,11 +7,11 @@ import type { UserInfo } from "../types";
 export const Header = ({
   userInfo,
   activeModal,
-  setActiveModal,
+  handleActiveModal,
 }: {
   userInfo?: UserInfo | null;
   activeModal: string;
-  setActiveModal: (activeModal: string) => void;
+  handleActiveModal: (activeModal: string) => void;
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -39,11 +39,11 @@ export const Header = ({
 
   return (
     <div className="z-10 fixed top-0 left-0 right-0 max-w-lg px-3 mx-auto bg-white/90 backdrop-blur-sm border-b-2 text-black h-10 flex items-center justify-between shadow-md">
-      {activeModal ? (
+      {activeModal !== "DeactivateClose" && activeModal !== "DeactivateDone" ? (
         <div className="flex text-lg">
           <button
             className="flex hover:bg-gray-100 transition-all duration-200 rounded-full w-8 h-8 items-center justify-center"
-            onClick={() => setActiveModal("")}
+            onClick={() => handleActiveModal("DeactivateClose")}
           >
             <span className="material-symbols-outlined">close</span>
           </button>
@@ -57,10 +57,11 @@ export const Header = ({
           <div className="flex text-gray-500">
             <NavigationButton
               icon="account_circle"
+              label="Account"
               onClick={
                 userInfo
-                  ? () => setActiveModal("Account")
-                  : () => setActiveModal("Login")
+                  ? () => handleActiveModal("Account")
+                  : () => handleActiveModal("Login")
               }
             />
           </div>

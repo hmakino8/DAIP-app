@@ -1,0 +1,122 @@
+{% extends "base/base.html" %}
+
+{% block title %}座席予約{% endblock %}
+
+{% block main_padding %}pt-24{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' %}
+
+<div class="mx-auto w-full max-w-3xl">
+  <div class="rounded shadow-md text-[10px] md:text-base px-5 pb-5">
+
+    <form action="{% url 'user:reservation_calendar' %}" method="get">
+      <input type="hidden" name="week_offset" value="{{ week_offset }}">
+      <select
+        id="seat"
+        name="seat"
+        class="shadow-md block text-sm font-medium text-gray-600 text-center border rounded-md py-3 mx-auto"
+        onchange="this.form.submit()"
+      >
+        {% for seat in SEATS %}
+          <option 
+            value="{{ seat }}" 
+            {% if selected_seat == seat %}
+              selected
+            {% endif %}
+          >
+            {% if seat == '全席' %}
+              全席
+            {% else %}
+              座席{{ seat }}
+            {% endif %}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+    <div class="flex justify-between items-center m-5">
+      <a 
+        {% if week_offset > 0 %}
+          href="?week_offset={{ week_offset|add:-1 }}&seat={{ selected_seat }}"
+          class="flex items-center justify-center text-blue-500"
+        {% else %}
+          class="flex items-center justify-center text-gray-300"
+        {% endif %}
+      >
+        <span class="material-symbols-outlined">
+          chevron_left
+        </span>
+        前の週
+      </a>
+      <a
+        {% if week_offset < 13 %}
+          href="?week_offset={{ week_offset|add:1 }}&seat={{ selected_seat }}"
+          class="flex items-center justify-center text-blue-500"
+        {% else %}
+          class="flex items-center justify-center text-gray-300"
+        {% endif %}
+      >
+        次の週
+        <span class="material-symbols-outlined">
+          chevron_right
+        </span>
+      </a>
+    </div>
+    <div class="grid grid-cols-8 gap-1">
+      <!-- Headers -->
+      <div class="text-center font-semibold h-8"></div>
+      {% for date in weekdates %}
+        <div class="text-center font-semibold h-8">{{ date.month }}/{{ date.day }}</div>
+      {% endfor %}
+      <div class="text-center font-semibold h-8"></div>
+      {% for DAY_OF_WEEK in DAYS_OF_WEEK %}
+        <div class="text-center font-semibold h-8">{{ DAY_OF_WEEK }}</div>
+      {% endfor %}
+      {% for time_slots in calendar_data %}
+        <div class="text-center font-semibold h-8">{{ time_slots.time }}</div>
+        {% for slot in time_slots.slots %}
+          <form action="{% url 'user:reservation_calendar' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="selected_date" value="{{ slot.date }}">
+            <input type="hidden" name="selected_time" value="{{ slot.time }}">
+            <input type="hidden" name="selected_seat" value="{{ selected_seat }}">
+            {% if not slot.is_available %}
+              <button 
+                disabled
+                type="submit"
+                class="border p-0 w-full text-center bg-gray-200 h-8"
+              >
+              -
+              </button>
+            {% elif slot.is_reserved %}
+              <button 
+                disabled
+                type="submit"
+                class="border p-0 w-full text-center bg-gray-200 h-8"
+              >
+              ×
+              </button>
+            {% else %}
+              <button 
+                type="submit"
+                class="border p-0 w-full text-center bg-gray-100 text-green-500 h-8"
+              >
+             ⚪︎
+              </button>
+            {% endif %}
+          </form>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  {% if user.role == 'user' %}
+    {% with back_url="user:reservation_main"%}
+      {% include 'base/footer2.html' %}
+    {% endwith %}
+  {% else %}
+    {% with back_url="staff:home"%}
+      {% include 'base/footer2.html' %}
+    {% endwith %}
+  {% endif %}
+</div>
+{% endblock %}

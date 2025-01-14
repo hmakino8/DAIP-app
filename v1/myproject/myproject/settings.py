@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 # デフォルトのUserモデルをCustomUserに変更
-AUTH_USER_MODEL = 'delicafe_app.CustomUser'
+AUTH_USER_MODEL = 'deicafe_app.CustomUser'
 
 # ログイン後のリダイレクト先
 LOGIN_URL = 'accounts:login'
@@ -31,6 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# env keyで呼び出すように変更しておく
 SECRET_KEY = 'django-insecure-1=udt1jsfg3e7pb&!)qj93$glh%p7tji_abs3d+h3wwdm8_lk^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_browser_reload',
-    'delicafe_app',
+    'deicafe_app',
     'widget_tweaks',
 ]
 
