@@ -1,6 +1,8 @@
 import { FormEvent, ChangeEvent } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { FormData, ValidationErrors } from "../types";
+import { useRouter } from "next/navigation";
 
 type AuthFormProps = {
   formData: FormData;
@@ -11,7 +13,7 @@ type AuthFormProps = {
   linkText: string;
   linkHref: string;
   submitText: string;
-  submitTextColor: string;
+  setActiveModal: (activeModal: string) => void;
 };
 
 export const AuthForm = ({
@@ -23,8 +25,11 @@ export const AuthForm = ({
   linkText,
   linkHref,
   submitText,
-  submitTextColor,
+  setActiveModal,
 }: AuthFormProps) => {
+  const pathname = usePathname();
+  const router = useRouter();
+
   return (
     <form
       method="post"
@@ -33,8 +38,13 @@ export const AuthForm = ({
         handleSubmit(e);
       }}
     >
+      {pathname == "/accounts/login" && messages?.message && (
+        <div className="py-2 text-red-500 text-sm text-center">
+          {messages.message}
+        </div>
+      )}
       {Object.entries(formData).map(([key, field]) => (
-        <div key={key} className="mb-5">
+        <div key={key} className="mb-2">
           <input
             type={field.type}
             name={field.name}
@@ -43,7 +53,7 @@ export const AuthForm = ({
             placeholder={field.placeholder}
             required={field.required}
             autoFocus={field.autoFocus}
-            className="w-full p-2 border rounded-md"
+            className="w-full p-2 border-b transition-colors duration-300 focus:border-b-1 focus:border-blue-500 focus:outline-none"
           />
           <div className="py-2 text-red-500 text-sm text-center">
             {messages[key]}
@@ -51,12 +61,19 @@ export const AuthForm = ({
         </div>
       ))}
       <div className="flex justify-between items-center">
-        <Link className={"text-blue-500"} href={linkHref}>
+        <Link className={"text-blue-500 hover:text-blue-400"} href={linkHref}>
           {linkText}
         </Link>
         <button
           type="submit"
-          className={`${submitTextColor} text-white p-2 rounded-md w-20`}
+          className={`${
+            pathname == "/accounts/login"
+              ? "bg-blue-500 hover:bg-blue-400"
+              : "bg-green-500 hover:bg-green-400"
+          } text-white p-2 rounded-full shadow-lg w-24 h-12`}
+          onClick={() => {
+            submitText === "ログイン" && setActiveModal("");
+          }}
         >
           {submitText}
         </button>

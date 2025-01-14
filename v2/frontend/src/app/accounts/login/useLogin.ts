@@ -47,6 +47,7 @@ export const useLogin = () => {
         router.push("/home");
       } else {
         console.log("不正なレスポンス");
+        setMessage("メールアドレスもしくはパスワードが正しくありません");
       }
     } catch (error) {
       console.log("不正なログイン");

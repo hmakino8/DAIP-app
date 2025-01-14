@@ -19,7 +19,6 @@ export default function SignupPage() {
         linkText="ログイン画面に戻る"
         linkHref="/accounts/login"
         submitText="登録"
-        submitTextColor="bg-green-500"
       />
     </AuthLayout>
   );
