@@ -42,17 +42,8 @@ export default function HomePage() {
     }
   };
 
-  // useEffect(() => {
-  //   fetchUserInfo();
-  // }, []);
-
   const handleActiveModal = async (modalName: string) => {
     setActiveModal(modalName);
-    // if (modalName == "DeactivateDone") {
-    //   setTimeout(async () => {
-    //     await fetchUserInfo();
-    //   }, 300);
-    // }
     if (modalName == "DeactivateDone") {
       await fetchUserInfo();
     }
@@ -231,9 +222,9 @@ export default function HomePage() {
       <AnimatePresence>
         {activeModal === "Login" && (
           <motion.div
-            initial={{ opacity: 0, x: 500 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 500 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed max-w-lg mx-auto z-20 top-10 right-0 left-0 flex items-center justify-center"
           >
