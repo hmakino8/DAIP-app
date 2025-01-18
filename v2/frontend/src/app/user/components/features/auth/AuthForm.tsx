@@ -1,0 +1,76 @@
+import { FormEvent, ChangeEvent } from "react";
+import type { FormData, ValidationErrors } from "@/user/types";
+
+type AuthFormProps = {
+  formData: FormData;
+  formValues: Record<string, string>;
+  messages: ValidationErrors;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  linkText: string;
+  submitText: string;
+  onClick: () => void;
+};
+
+export const AuthForm = ({
+  formData,
+  formValues,
+  messages,
+  handleSubmit,
+  handleChange,
+  linkText,
+  submitText,
+  onClick,
+}: AuthFormProps) => {
+  return (
+    <form
+      method="post"
+      noValidate
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
+    >
+      {submitText === "ログイン" && messages?.message && (
+        <div className="py-2 text-red-500 text-sm text-center">
+          {messages.message}
+        </div>
+      )}
+      {Object.entries(formData).map(([key, field]) => (
+        <div key={key} className="mb-2">
+          <input
+            type={field.type}
+            name={field.name}
+            value={formValues[key as keyof typeof formValues]}
+            onChange={handleChange}
+            placeholder={field.placeholder}
+            required={field.required}
+            autoFocus={field.autoFocus}
+            className="w-full bg-gray-100 p-2 border-b transition-colors duration-300 focus:border-b-1 focus:border-blue-500 focus:outline-none"
+          />
+          <div className="py-2 text-red-500 text-sm text-center">
+            {messages[key]}
+          </div>
+        </div>
+      ))}
+      <div className="flex justify-between items-center">
+        <button
+          type="button"
+          className={"text-blue-500 hover:text-blue-400"}
+          onClick={onClick}
+        >
+          {linkText}
+        </button>
+        <button
+          type="submit"
+          className={`${
+            submitText === "ログイン"
+              ? "bg-blue-500 hover:bg-blue-400"
+              : "bg-green-600 hover:bg-green-400"
+          } text-white p-2 rounded-full shadow-lg w-24 h-12`}
+        >
+          {submitText}
+        </button>
+      </div>
+    </form>
+  );
+};

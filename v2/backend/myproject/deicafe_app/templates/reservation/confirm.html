@@ -70,7 +70,7 @@
   </div>
   <form method="post" action="{% url 'user:reservation_done' %}" id="reservationForm">
     {% csrf_token %}
-    {% with back_url="user:reservation_main" next_text="予約確定" next_color="bg-green-500" form_id="reservationForm" %}
+    {% with back_url="user:reservation_main" next_text="予約確定" next_color="bg-green-600" form_id="reservationForm" %}
       {% include 'base/footer.html' %}
     {% endwith %}
   </form>

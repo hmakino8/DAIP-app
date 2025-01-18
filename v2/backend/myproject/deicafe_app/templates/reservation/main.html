@@ -11,7 +11,7 @@
   <div class="flex flex-col items-center mb-10 w-full">
     <a
       type="submit"
-      class="flex items-center justify-center bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
+      class="flex items-center justify-center bg-green-600 text-white text-center p-2 rounded-md w-32 mb-5"
       {% if not reservation_draft %}
         href="{% url 'user:reservation_calendar' %}?week_offset=0&seat=1"
       {% endif %}
@@ -69,7 +69,7 @@
   <div class="flex flex-col items-center h-auto w-full">
     <a
       type="submit"
-      class="flex items-center justify-center bg-green-500 text-white text-center p-2 rounded-md w-32 mb-5"
+      class="flex items-center justify-center bg-green-600 text-white text-center p-2 rounded-md w-32 mb-5"
       href="{% url 'user:reservation_pre_order' %}"
     >
       <span class="material-symbols-outlined">
