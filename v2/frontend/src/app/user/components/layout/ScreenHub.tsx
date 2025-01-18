@@ -8,6 +8,7 @@ import { UserProfileScreen } from "../features/userProfile/UserProfileScreen";
 import { LoginScreen } from "../features/auth/LoginScreen";
 import { SignupScreen } from "../features/auth/SignupScreen";
 import { LoadingSpinner } from "../ui/LoadingSpinner";
+import { MenuScreen } from "../features/Menu/MenuScreen";
 
 export const ScreenHub = () => {
   const { activeScreen } = useScreen();
@@ -33,17 +34,15 @@ export const ScreenHub = () => {
   return (
     <>
       {isLoading && <LoadingSpinner />}
-      {activeScreen === "Home" && (
-        <AnimatePresence>
-          {user && popUp ? (
-            <motion.div {...homeScreenAnimation}>
-              <HomeScreen />
-            </motion.div>
-          ) : (
+      <AnimatePresence>
+        {user && popUp ? (
+          <motion.div {...homeScreenAnimation}>
             <HomeScreen />
-          )}
-        </AnimatePresence>
-      )}
+          </motion.div>
+        ) : (
+          <HomeScreen />
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {activeScreen === "Account" && (
@@ -52,7 +51,7 @@ export const ScreenHub = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 1000 }}
             transition={{ duration: 0.3 }}
-            className="fixed max-w-lg mx-auto z-20 top-10 right-0 left-0 flex items-center justify-center"
+            className="screen-layout"
           >
             <UserProfileScreen />
           </motion.div>
@@ -66,7 +65,7 @@ export const ScreenHub = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed max-w-lg mx-auto z-20 top-10 right-0 left-0 flex items-center justify-center"
+            className="screen-layout"
           >
             <LoginScreen />
           </motion.div>
@@ -80,9 +79,23 @@ export const ScreenHub = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -500 }}
             transition={{ duration: 0.3 }}
-            className="fixed max-w-lg mx-auto z-20 top-10 right-0 left-0 flex items-center justify-center"
+            className="screen-layout"
           >
             <SignupScreen />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activeScreen === "Menu" && (
+          <motion.div
+            initial={{ opacity: 0, y: 1000 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 1000 }}
+            transition={{ duration: 0.3 }}
+            className="screen-layout"
+          >
+            <MenuScreen />
           </motion.div>
         )}
       </AnimatePresence>

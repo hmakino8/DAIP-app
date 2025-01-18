@@ -30,13 +30,12 @@ export const AuthForm = ({
         handleSubmit(e);
       }}
     >
-      {submitText === "ログイン" && messages?.message && (
-        <div className="py-2 text-red-500 text-sm text-center">
-          {messages.message}
-        </div>
-      )}
+      <LoginErrorMessage
+        isError={(submitText === "ログイン" && messages?.message) as boolean}
+        message={messages?.message}
+      />
       {Object.entries(formData).map(([key, field]) => (
-        <div key={key} className="mb-2">
+        <div key={key} className="mb-4">
           <input
             type={field.type}
             name={field.name}
@@ -47,9 +46,10 @@ export const AuthForm = ({
             autoFocus={field.autoFocus}
             className="w-full bg-gray-100 p-2 border-b transition-colors duration-300 focus:border-b-1 focus:border-blue-500 focus:outline-none"
           />
-          <div className="py-2 text-red-500 text-sm text-center">
-            {messages[key]}
-          </div>
+          <SignupErrorMessage
+            isError={messages[key]?.length > 0}
+            message={messages[key]}
+          />
         </div>
       ))}
       <div className="flex justify-between items-center">
@@ -73,4 +73,30 @@ export const AuthForm = ({
       </div>
     </form>
   );
+};
+
+const LoginErrorMessage = ({
+  isError,
+  message,
+}: {
+  isError: boolean;
+  message: string[] | undefined;
+}) => {
+  if (isError)
+    return (
+      <div className="py-2 text-red-500 text-sm text-center">{message}</div>
+    );
+};
+
+const SignupErrorMessage = ({
+  isError,
+  message,
+}: {
+  isError: boolean;
+  message: string[] | undefined;
+}) => {
+  if (isError)
+    return (
+      <div className="py-2 text-red-500 text-sm text-center">{message}</div>
+    );
 };
