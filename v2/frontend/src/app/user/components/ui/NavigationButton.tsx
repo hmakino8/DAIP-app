@@ -7,7 +7,7 @@ export const NavigationButton: React.FC<{
   return (
     <button
       className={`w-full flex flex-col items-center ${
-        isActive && "text-blue-400"
+        isActive ? "text-blue-400" : "text-gray-500"
       } bg-transparent hover:opacity-80`}
       onClick={onClick}
     >

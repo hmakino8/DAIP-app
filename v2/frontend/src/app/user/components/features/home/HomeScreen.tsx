@@ -1,35 +1,36 @@
 import { lato } from "@/user/config";
 import { useAuth } from "@/user/hooks/useAuth";
 import { AuthPromptBar } from "../../ui/AuthPromptBar";
+import { Separator } from "../../ui/Separator";
+import { useScreen } from "@/user/hooks/useScreen";
 
 export const HomeScreen = () => {
   const { user } = useAuth();
-
   return (
     <>
-      <div className="w-full pt-8">
-        {user && <ReservationStatus />}
-        <HeroSection />
-        <InfoSection />
-        {!user && <AuthPromptBar />}
-      </div>
+      {user && <ReservationStatus />}
+      <HeroSection />
+      <WhatIsNewSection />
+      {!user && <AuthPromptBar />}
     </>
   );
 };
 
 const ReservationStatus = () => {
   return (
-    <div className="p-5 my-5 w-full bg-orange-50">
-      <p className="font-bold w-full text-xl text-start">ご予約状況</p>
-      <div className="w-full my-5 h-[50px] bg-white rounded-md"></div>
-      <div className="w-full my-5 h-[50px] bg-white rounded-md"></div>
+    <div className="mt-5 p-5 w-full bg-white">
+      <p className="text-black w-full text-xl text-start">ご予約</p>
+      <div className="w-full my-5 h-[50px] bg-gray-100 border border-gray-200 rounded-md"></div>
+      <div className="w-full my-5 h-[50px] bg-gray-100 border border-gray-200 rounded-md"></div>
     </div>
   );
 };
 
 const HeroSection = () => {
+  const { setActiveScreenCheckAuth } = useScreen();
+
   return (
-    <div className="relative">
+    <div className="relative my-5">
       <img
         src="/images/Smart_deicafe.png"
         alt="Smart_deicafe"
@@ -39,7 +40,10 @@ const HeroSection = () => {
         <p className={`text-center text-2xl text-white/90 ${lato.className}`}>
           SMART dei café
         </p>
-        <button className="w-36 h-12 mt-1 sm:mt-3 text-white text-md bg-green-600 border border-green-700 rounded-full hover:bg-green-500 transition-all duration-200 shadow-2xl">
+        <button
+          className="btn-green-wide"
+          onClick={() => setActiveScreenCheckAuth("Reservation")}
+        >
           座席を予約する
         </button>
       </div>
@@ -47,21 +51,25 @@ const HeroSection = () => {
   );
 };
 
-const InfoSection = () => {
+const WhatIsNewSection = () => {
   return (
-    <div className="p-5 h-auto w-full bg-gray-50 text-sm pb-28">
-      <p className="font-bold w-full text-2xl text-start">What's New</p>
+    <div className="p-5 h-auto text-sm bg-white rounded-md">
+      <p className="text-black font-bold w-full text-2xl text-start pb-5">
+        What's New
+      </p>
 
       <Contents
         image="Mango_Yogurt_smoothie.png"
         description="・〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜"
       />
+      <Separator />
 
       <Contents
         image="Non_alcohol_Mojito.jpg"
         description={`[新商品情報]
 ノンアルコール モヒート`}
       />
+      <Separator />
 
       <Contents
         image="Very_Berry_smoothie.png"
@@ -74,7 +82,7 @@ const InfoSection = () => {
 const Contents = (props: { image: string; description: string }) => {
   const { image, description } = props;
   return (
-    <div className="flex w-full py-5 border-b border-gray-300 max-h-40">
+    <div className="flex w-full max-h-40">
       <div className="w-1/3 min-w-[120px]">
         <img
           src={`/images/${image}`}
@@ -86,9 +94,7 @@ const Contents = (props: { image: string; description: string }) => {
       </div>
       <div className="w-2/3 pl-4">
         <div className="h-4/5 overflow-y-auto">
-          <p className=" text-gray-600 break-words whitespace-pre-wrap">
-            {description}
-          </p>
+          <p className=" break-words whitespace-pre-wrap">{description}</p>
         </div>
         <div className="h-1/5 text-blue-500">続きを見る</div>
       </div>

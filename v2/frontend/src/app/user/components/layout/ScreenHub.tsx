@@ -1,27 +1,19 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useScreen } from "@/user/hooks/useScreen";
-import { useAuth } from "@/user/hooks/useAuth";
 import { useUIState } from "@/user/hooks/useUIState";
 import { HomeScreen } from "../features/home/HomeScreen";
 import { UserProfileScreen } from "../features/userProfile/UserProfileScreen";
 import { LoginScreen } from "../features/auth/LoginScreen";
 import { SignupScreen } from "../features/auth/SignupScreen";
 import { LoadingSpinner } from "../ui/LoadingSpinner";
-import { MenuScreen } from "../features/Menu/MenuScreen";
+import { MenuScreen } from "../features/menu/MenuScreen";
+import { ReservationScreen } from "../features/reservation/ReservationScreen";
+import { SelectedProductScreen } from "../features/menu/SelectedProductScreen";
 
 export const ScreenHub = () => {
   const { activeScreen } = useScreen();
-  const { user } = useAuth();
-  const { isLoading, popUp } = useUIState();
-
-  const homeScreenAnimation = {
-    as: motion.div,
-    initial: { opacity: 0, y: -280 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -280 },
-    transition: { duration: 0.5, delay: 0.3 },
-  } as const;
+  const { isLoading } = useUIState();
 
   useEffect(() => {
     if (activeScreen !== "Home") {
@@ -29,76 +21,110 @@ export const ScreenHub = () => {
     } else {
       document.body.classList.remove("overflow-hidden");
     }
+    console.log(activeScreen);
   }, [activeScreen]);
 
   return (
-    <>
+    <AnimatePresence>
       {isLoading && <LoadingSpinner />}
-      <AnimatePresence>
-        {user && popUp ? (
-          <motion.div {...homeScreenAnimation}>
-            <HomeScreen />
-          </motion.div>
-        ) : (
+      {(activeScreen === "Home" || activeScreen === "Account") && (
+        <motion.div
+          key="Home"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0 }}
+          className="screen-layout pt-10 px-0 bg-orange-50 z-0"
+        >
           <HomeScreen />
-        )}
-      </AnimatePresence>
+        </motion.div>
+      )}
 
-      <AnimatePresence>
-        {activeScreen === "Account" && (
-          <motion.div
-            initial={{ opacity: 0, y: 1000 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 1000 }}
-            transition={{ duration: 0.3 }}
-            className="screen-layout"
-          >
-            <UserProfileScreen />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {activeScreen === "Account" && (
+        <motion.div
+          key="Account"
+          initial={{ y: 1000 }}
+          animate={{ y: 0 }}
+          exit={{ y: 1000 }}
+          transition={{ duration: 0.3 }}
+          className="screen-layout bg-gray-100"
+        >
+          <UserProfileScreen />
+        </motion.div>
+      )}
 
-      <AnimatePresence>
-        {activeScreen === "Login" && (
+      {activeScreen === "Login" && (
+        <motion.div
+          key="Login"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="screen-layout bg-gray-100"
+        >
+          <LoginScreen />
+        </motion.div>
+      )}
+
+      {activeScreen === "Signup" && (
+        <motion.div
+          key="Signup"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="screen-layout bg-gray-100"
+        >
+          <SignupScreen />
+        </motion.div>
+      )}
+
+      {(activeScreen === "Menu" ||
+        activeScreen === "SelectedProductScreen" ||
+        activeScreen === "Reservation") && (
+        <>
           <motion.div
+            key="Menu"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{
+              opacity: activeScreen === "Menu" ? 1 : 0,
+            }}
+            transition={{ duration: 0.3 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="screen-layout"
-          >
-            <LoginScreen />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {activeScreen === "Signup" && (
-          <motion.div
-            initial={{ opacity: 0, x: -500 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -500 }}
-            transition={{ duration: 0.3 }}
-            className="screen-layout"
-          >
-            <SignupScreen />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {activeScreen === "Menu" && (
-          <motion.div
-            initial={{ opacity: 0, y: 1000 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 1000 }}
-            transition={{ duration: 0.3 }}
-            className="screen-layout"
+            className="screen-layout bg-white"
           >
             <MenuScreen />
           </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+
+          <motion.div
+            key="SelectedProductScreen"
+            initial={{ opacity: 0, y: -1000 }}
+            animate={{
+              opacity: activeScreen === "SelectedProductScreen" ? 1 : 0,
+              y: activeScreen === "SelectedProductScreen" ? 0 : 1000,
+            }}
+            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0 }}
+            className="screen-layout bg-white"
+          >
+            <SelectedProductScreen />
+          </motion.div>
+
+          <motion.div
+            key="Reservation"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: activeScreen === "Reservation" ? 1 : 0,
+              x: activeScreen === "Reservation" ? 0 : 1000,
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="screen-layout bg-gray-100"
+          >
+            <ReservationScreen />
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 };

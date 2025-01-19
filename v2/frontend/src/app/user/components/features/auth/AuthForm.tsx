@@ -63,10 +63,8 @@ export const AuthForm = ({
         <button
           type="submit"
           className={`${
-            submitText === "ログイン"
-              ? "bg-blue-500 hover:bg-blue-400"
-              : "bg-green-600 hover:bg-green-400"
-          } text-white p-2 rounded-full shadow-lg w-24 h-12`}
+            submitText === "ログイン" ? "btn-blue-small" : "btn-green-small"
+          }`}
         >
           {submitText}
         </button>

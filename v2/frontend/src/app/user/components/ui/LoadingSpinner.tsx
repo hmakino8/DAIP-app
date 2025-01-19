@@ -12,12 +12,12 @@ export const LoadingSpinner = () => {
       if (pendingScreen) {
         setActiveScreen(pendingScreen);
       }
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="fixed z-[100] inset-0 max-w-lg mx-auto flex justify-center bg-gray-500/50 items-center shadow-2xl">
+    <div className="fixed z-[1000] inset-0 max-w-lg mx-auto flex justify-center bg-gray-500/50 items-center shadow-2xl">
       <div className="relative">
         <div className="w-16 h-16 border-4 border-gray-100 rounded-full animate-[spin_2s_ease-in-out_infinite]">
           <div className="absolute top-0 left-0 w-16 h-16 border-4 border-gray-200 rounded-full animate-[spin_1s_cubic-bezier(0.6,0.2,0.4,0.8)_infinite] border-t-transparent"></div>

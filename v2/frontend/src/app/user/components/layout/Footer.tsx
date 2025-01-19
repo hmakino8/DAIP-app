@@ -2,22 +2,25 @@ import { NavigationButton } from "../ui/NavigationButton";
 import { useScreen } from "@/user/hooks/useScreen";
 
 export const Footer = () => {
-  const { activeScreen, setActiveScreen } = useScreen();
+  const { activeScreen, setActiveScreen, setActiveScreenCheckAuth } =
+    useScreen();
+
+  const isHidden =
+    activeScreen === "Login" ||
+    activeScreen === "Signup" ||
+    activeScreen === "Account" ||
+    activeScreen === "SelectedProductScreen";
+
+  if (isHidden) return null;
 
   return (
-    <div className="z-50 fixed pb-10 pt-3 bottom-0 left-0 right-0 max-w-lg bg-white mx-auto h-auto flex items-center">
-      <div className="w-full flex text-gray-500">
+    <div className="z-[1000] fixed bottom-5 py-2 left-0 right-0 w-60 bg-gray-50/50 backdrop-blur-md m-auto flex items-center rounded-full shadow-lg">
+      <div className="w-full flex">
         <NavigationButton
           icon="home"
           label="Home"
           isActive={activeScreen === "Home"}
           onClick={() => setActiveScreen("Home")}
-        />
-        <NavigationButton
-          icon="shopping_cart"
-          label="Cart"
-          isActive={activeScreen === "Cart"}
-          onClick={() => setActiveScreen("Cart")}
         />
         <NavigationButton
           icon="menu_book"
@@ -28,8 +31,8 @@ export const Footer = () => {
         <NavigationButton
           icon="calendar_month"
           label="Reserve"
-          isActive={activeScreen === "Reserve"}
-          onClick={() => setActiveScreen("Reserve")}
+          isActive={activeScreen === "Reservation"}
+          onClick={() => setActiveScreenCheckAuth("Reservation")}
         />
       </div>
     </div>

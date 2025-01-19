@@ -1,5 +1,6 @@
 import { useScreen } from "@/user/hooks/useScreen";
 import { useAuth } from "@/user/hooks/useAuth";
+import { SCREEN_TITLES } from "@/user/constants";
 import { NavigationButton } from "../ui/NavigationButton";
 import { PopUp } from "../ui/PopUp";
 
@@ -7,53 +8,61 @@ export const Header = () => {
   const { activeScreen } = useScreen();
 
   return (
-    <div className="z-50 fixed top-[-2px] left-0 right-0 max-w-lg px-3 mx-auto bg-white border-b-1 text-black h-10 shadow-md">
-      {activeScreen !== "Home" ? <CartMenuReserveHeader /> : <HomeHeader />}
+    <div className="z-[1000] fixed top-[-2px] left-0 right-0 max-w-lg px-3 mx-auto bg-white border-b-1 text-black h-10 shadow-md">
+      {activeScreen !== "Home" ? <HeaderForOtherFeatures /> : <HeaderForHome />}
       <PopUp />
     </div>
   );
 };
 
-const CartMenuReserveHeader = () => {
+const HeaderForOtherFeatures = () => {
   const { activeScreen, setActiveScreen } = useScreen();
 
+  const handleOnClick = () => {
+    if (activeScreen === "SelectedProductScreen") {
+      setActiveScreen("Menu");
+    } else {
+      setActiveScreen("Home");
+    }
+  };
+
+  const title = activeScreen
+    ? SCREEN_TITLES[activeScreen as keyof typeof SCREEN_TITLES]
+    : "";
+
+  const CloseOrBackIcon = "close";
+
   return (
-    <>
-      <div className="flex text-lg my-1">
+    <div className="flex text-lg my-1">
+      {activeScreen !== "Menu" && activeScreen !== "Reservation" && (
         <button
           className="flex hover:bg-gray-100 transition-all duration-200 rounded-full w-8 h-8 items-center justify-center"
-          onClick={() => setActiveScreen("Home")}
+          onClick={handleOnClick}
         >
-          <span className="material-symbols-outlined">close</span>
+          <span className="material-symbols-outlined">{CloseOrBackIcon}</span>
         </button>
-        <div className="fixed left-1/2 -translate-x-1/2">{activeScreen}</div>
-      </div>
-    </>
+      )}
+      <div className="fixed left-1/2 -translate-x-1/2">{title}</div>
+    </div>
   );
 };
 
-const HomeHeader = () => {
+const HeaderForHome = () => {
   const { user } = useAuth();
-  const { setActiveScreen } = useScreen();
+  const { setActiveScreenCheckAuth } = useScreen();
+
+  const title = "こんにちは" + (user ? `、${user.username}さん` : "");
 
   return (
-    <>
-      <div className="flex justify-between items-center my-1">
-        <div className="text-black text-lg">
-          こんにちは{user && `、${user.username}さん`}
-        </div>
-        <div className="flex text-gray-500">
-          <NavigationButton
-            icon="account_circle"
-            label="Account"
-            onClick={
-              user
-                ? () => setActiveScreen("Account")
-                : () => setActiveScreen("Login")
-            }
-          />
-        </div>
+    <div className="flex justify-between items-center my-1">
+      <div className="text-black text-lg">{title}</div>
+      <div className="flex">
+        <NavigationButton
+          icon="account_circle"
+          label="Account"
+          onClick={() => setActiveScreenCheckAuth("Account")}
+        />
       </div>
-    </>
+    </div>
   );
 };

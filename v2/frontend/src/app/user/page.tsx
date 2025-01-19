@@ -12,11 +12,9 @@ export default function UserPage() {
     <AuthProvider>
       <UIStateProvider>
         <ScreenProvider>
-          <div className="max-w-lg mx-auto shadow-xl">
-            <Header />
-            <ScreenHub />
-            <Footer />
-          </div>
+          <Header />
+          <ScreenHub />
+          <Footer />
         </ScreenProvider>
       </UIStateProvider>
     </AuthProvider>
